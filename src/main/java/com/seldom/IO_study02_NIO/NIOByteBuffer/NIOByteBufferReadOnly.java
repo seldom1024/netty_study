@@ -1,4 +1,4 @@
-package com.seldom.IO_study02_NIO;
+package com.seldom.IO_study02_NIO.NIOByteBuffer;
 
 import java.nio.ByteBuffer;
 

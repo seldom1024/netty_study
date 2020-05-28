@@ -1,4 +1,4 @@
-package com.seldom.IO_study02_NIO;
+package com.seldom.IO_study02_NIO.NIOFileChannel;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
