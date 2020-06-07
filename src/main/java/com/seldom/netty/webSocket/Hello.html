@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<form onsubmit="return false">
+    <textarea id="sendBox" name="message" style="height: 300px; width: 300px"></textarea>
+    <input type="button" value="发送消息" onclick="send(this.form.message.value)">
+    <textarea id="responseText" style="height: 300px; width: 300px"></textarea>
+    <input type="button" value="清空" onclick="document.getElementById('responseText').value = ''">
+</form>
+</body>
+<script>
+    var socket;
+    // 判断是否支持WebSocket
+    if (window.WebSocket){
+        socket = new WebSocket("ws://127.0.0.1:7000/hello");
+        // 相当于 channelRead0， ev 收到的消息
+        socket.onmessage = function (ev) {
+            var rt = document.getElementById("responseText");
+            rt.value = rt.value+"\n"+ev.data;
+        };
+
+        socket.onopen = function (ev) {
+            document.getElementById("responseText").value = "服务已连接"
+        };
+
+        socket.onclose = function (ev) {
+            var rt = document.getElementById("responseText");
+            rt.value = rt.value+ "\n连接关闭";
+        };
+    }else {
+        alert("浏览器不支持...")
+    }
+
+    function send(msg) {
+        if (window.socket){
+            if (socket.readyState === WebSocket.OPEN){
+                console.log(msg)
+                socket.send(msg);
+                document.getElementById("sendBox").value = "";
+            }else {
+                alert("连接没有开启")
+            }
+        }
+    }
+</script>
+</html>
